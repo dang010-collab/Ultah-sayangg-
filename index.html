@@ -37,7 +37,6 @@
         function buatHujanTeks() { const elemen = document.createElement('div'); elemen.classList.add('rain-text'); const teksAcak = kataKata[Math.floor(Math.random() * kataKata.length)]; elemen.innerText = teksAcak; elemen.style.left = Math.random() * 100 + 'vw'; const durasi = Math.random() * 3 + 3; elemen.style.animationDuration = durasi + 's'; elemen.style.fontSize = Math.random() * 6 + 12 + 'px'; elemen.style.opacity = Math.random() * 0.5 + 0.4; document.body.appendChild(elemen); setTimeout(() => { elemen.remove(); }, durasi * 1000); }
         setInterval(buatHujanTeks, 200);
 
-        // Otomatis mengambil list nama file foto yang kamu upload di halaman tadi
         const repoUser = "dang010-collab";
         const repoName = "Ultah-sayangg-";
         
