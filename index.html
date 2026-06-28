@@ -13,54 +13,39 @@
         .foto-container img.active { opacity: 1; }
         h1 { font-size: 1.8rem; color: #ff4757; margin-bottom: 15px; text-shadow: 0 0 10px rgba(255, 71, 87, 0.5); }
         .card p { font-size: 1rem; line-height: 1.6; margin-bottom: 25px; color: #f1f2f6; }
-        .btn-musik { background-color: #ff4757; color: white; border: none; padding: 12px 25px; font-size: 0.9rem; border-radius: 25px; cursor: pointer; transition: 0.3s; font-weight: bold; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
-        .btn-musik:hover { background-color: #e84118; transform: scale(1.05); }
+        
+        /* Desain Kolom Pemutar YouTube Resmi */
+        .youtube-box {
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 71, 87, 0.5);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2);
+        }
         .rain-text { position: absolute; top: -50px; color: rgba(255, 182, 193, 0.75); font-size: 14px; font-weight: bold; white-space: nowrap; user-select: none; pointer-events: none; z-index: 1; animation: rain linear forwards; }
         @keyframes rain { to { transform: translateY(110vh); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        /* Menyembunyikan player SoundCloud asli agar tampilan web tetap rapi */
-        #sc-player { display: none; }
     </style>
-    <script src="https://w.soundcloud.com/player/api.js"></script>
 </head>
 <body>
-
-    <iframe id="sc-player" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1253018242&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-    </iframe>
 
     <div class="card">
         <div class="foto-container" id="slideshow-container"></div>
         <h1>Happy Birthday, Sayang! 💖</h1>
         <p>Selamat ulang tahun! Makasih banyak ya udah nemenin hari-hariku sampai sekarang. Semoga kamu panjang umur, sehat selalu, dan dilancarkan segala urusannya. I love you today, tomorrow, and forever! 🥰✨</p>
-        <button class="btn-musik" onclick="toggleMusik()">🎵 Putar Musik</button>
+        
+        <div class="youtube-box">
+            <iframe width="100%" height="80" src="https://www.youtube.com/embed/g7V3vK4O8qM?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
 
     <script>
-        // Logika Kontrol Widget Musik
-        const widgetIframe = document.getElementById('sc-player');
-        const player = SC.Widget(widgetIframe);
-        letisPlaying = false;
-
-        function toggleMusik() {
-            const btn = document.querySelector('.btn-musik');
-            if (!isPlaying) {
-                player.play();
-                btn.innerText = "⏸️ Jeda Musik";
-                isPlaying = true;
-            } else {
-                player.pause();
-                btn.innerText = "🎵 Putar Musik";
-                isPlaying = false;
-            }
-        }
-
         // Efek Hujan Teks Romantis
         const kataKata = ["HBD Sayang ❤️", "I Love You", "Sehat Selalu ya ✨", "Bahagia Terus 🥰", "Happy Birthday 🎉", "Miss You", "Selalu Bersamaku 🫂", "Kamu Berharga 💎", "Wish You All The Best 🎂"];
         function buatHujanTeks() { const elemen = document.createElement('div'); elemen.classList.add('rain-text'); const teksAcak = kataKata[Math.floor(Math.random() * kataKata.length)]; elemen.innerText = teksAcak; elemen.style.left = Math.random() * 100 + 'vw'; const durasi = Math.random() * 3 + 3; elemen.style.animationDuration = durasi + 's'; elemen.style.fontSize = Math.random() * 6 + 12 + 'px'; elemen.style.opacity = Math.random() * 0.5 + 0.4; document.body.appendChild(elemen); setTimeout(() => { elemen.remove(); }, durasi * 1000); }
         setInterval(buatHujanTeks, 200);
 
-        // Deteksi Otomatis Foto-Foto dari Repositori Kamu
+        // Deteksi Otomatis Foto dari Repositori Kamu
         const repoUser = "dang010-collab";
         const repoName = "Ultah-sayangg-";
         
