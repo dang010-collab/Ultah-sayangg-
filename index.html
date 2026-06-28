@@ -14,7 +14,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      color: #fff;
+      color: #ffffff;
       text-align: center;
       position: relative;
     }
@@ -29,7 +29,7 @@
       max-width: 420px;
       width: 90%;
       z-index: 10;
-      animation: fadeIn 1.5s ease-in-out;
+      animation: fadeIn 1.2s ease-in-out;
     }
     .foto-container {
       width: 150px;
@@ -78,7 +78,6 @@
       margin-bottom: 10px;
     }
     .music-btn:hover { transform: scale(1.03); }
-    .music-btn:active { transform: scale(0.98); }
     .status {
       font-size: 0.9rem;
       color: #ffdede;
@@ -119,16 +118,16 @@
   <script>
     const kataKata = ["HBD Sayang ❤️", "I Love You", "Sehat Selalu ya ✨", "Bahagia Terus 🥰", "Happy Birthday 🎉", "Miss You", "Selalu Bersamaku 🫂", "Kamu Berharga 💎", "Wish You All The Best 🎂"];
     function buatHujanTeks() {
-      const elemen = document.createElement('div');
-      elemen.classList.add('rain-text');
-      elemen.innerText = kataKata[Math.floor(Math.random() * kataKata.length)];
-      elemen.style.left = Math.random() * 100 + 'vw';
+      const el = document.createElement('div');
+      el.className = 'rain-text';
+      el.innerText = kataKata[Math.floor(Math.random() * kataKata.length)];
+      el.style.left = Math.random() * 100 + 'vw';
       const durasi = Math.random() * 3 + 3;
-      elemen.style.animationDuration = durasi + 's';
-      elemen.style.fontSize = Math.random() * 6 + 12 + 'px';
-      elemen.style.opacity = Math.random() * 0.5 + 0.4;
-      document.body.appendChild(elemen);
-      setTimeout(() => elemen.remove(), durasi * 1000);
+      el.style.animationDuration = durasi + 's';
+      el.style.fontSize = Math.random() * 6 + 12 + 'px';
+      el.style.opacity = Math.random() * 0.5 + 0.4;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), durasi * 1000);
     }
     setInterval(buatHujanTeks, 200);
 
@@ -146,6 +145,7 @@
           if (index === 0) img.classList.add('active');
           container.appendChild(img);
         });
+
         const images = container.getElementsByTagName('img');
         let currentIndex = 0;
         if (images.length > 1) {
@@ -155,7 +155,8 @@
             images[currentIndex].classList.add('active');
           }, 3000);
         }
-      });
+      })
+      .catch(err => console.log(err));
 
     const btn = document.getElementById('playMusicBtn');
     const audio = document.getElementById('bgMusic');
@@ -168,13 +169,14 @@
         audio.load();
         audio.muted = false;
         audio.volume = 1;
-        const result = audio.play();
-        if (result !== undefined) await result;
-        status.textContent = "Musik berhasil diputar 🎶";
+        await audio.play();
+        status.textContent = "Musik sedang diputar 🎶";
         btn.textContent = "Musik Sedang Diputar";
+        btn.disabled = true;
+        btn.style.opacity = 0.75;
       } catch (err) {
         console.error(err);
-        status.textContent = "Gagal memutar. Cek nama file MP3 dan pastikan file ikut terupload.";
+        status.textContent = "Gagal memutar. Pastikan file MP3 ada dan namanya sama persis.";
       }
     });
   </script>
