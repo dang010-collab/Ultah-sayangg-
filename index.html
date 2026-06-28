@@ -75,7 +75,7 @@
       font-weight: 700;
       box-shadow: 0 6px 18px rgba(255, 71, 87, 0.35);
       transition: transform 0.2s ease, opacity 0.2s ease;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .music-btn:hover { transform: scale(1.03); }
     .music-btn:active { transform: scale(0.98); }
@@ -108,23 +108,16 @@
     <h1>Happy Birthday, Sayang! 💖</h1>
     <p>Selamat ulang tahun! Makasih banyak ya udah nemenin hari-hariku sampai sekarang. Semoga kamu panjang umur, sehat selalu, dan dilancarkan segala urusannya. I love you today, tomorrow, and forever! 🥰✨</p>
 
-    <button class="music-btn" id="playMusicBtn">Putar Musik Until I Found You</button>
+    <button class="music-btn" id="playMusicBtn">🎵 Putar Musik</button>
     <div class="status" id="musicStatus">Musik belum diputar.</div>
 
-    <audio id="bgMusic" preload="auto" loop>
-      <source src="until-i-found-you.mp3" type="audio/mpeg">
-      Browser kamu tidak mendukung audio.
+    <audio id="bgMusic" preload="auto" loop playsinline>
+      <source src="./until-i-found-you.mp3" type="audio/mpeg">
     </audio>
   </div>
 
   <script>
-    // Efek hujan teks romantis
-    const kataKata = [
-      "HBD Sayang ❤️", "I Love You", "Sehat Selalu ya ✨",
-      "Bahagia Terus 🥰", "Happy Birthday 🎉", "Miss You",
-      "Selalu Bersamaku 🫂", "Kamu Berharga 💎", "Wish You All The Best 🎂"
-    ];
-
+    const kataKata = ["HBD Sayang ❤️", "I Love You", "Sehat Selalu ya ✨", "Bahagia Terus 🥰", "Happy Birthday 🎉", "Miss You", "Selalu Bersamaku 🫂", "Kamu Berharga 💎", "Wish You All The Best 🎂"];
     function buatHujanTeks() {
       const elemen = document.createElement('div');
       elemen.classList.add('rain-text');
@@ -139,26 +132,20 @@
     }
     setInterval(buatHujanTeks, 200);
 
-    // Slideshow foto
     const repoUser = "dang010-collab";
     const repoName = "Ultah-sayangg-";
     fetch(`https://api.github.com/repos/${repoUser}/${repoName}/contents`)
       .then(res => res.json())
       .then(data => {
-        const fotoFiles = data.filter(file =>
-          file.name.startsWith("IMG-") && file.name.match(/\.(jpg|jpeg|png|webp)$/i)
-        );
-
+        const fotoFiles = data.filter(file => file.name.startsWith("IMG-") && file.name.match(/\.(jpg|jpeg|png|webp)$/i));
         const container = document.getElementById('slideshow-container');
-
         fotoFiles.forEach((file, index) => {
           const img = document.createElement('img');
-          img.src = file.download_url || file.name;
-          img.alt = "Foto Cantik";
+          img.src = file.download_url;
+          img.alt = "Foto";
           if (index === 0) img.classList.add('active');
           container.appendChild(img);
         });
-
         const images = container.getElementsByTagName('img');
         let currentIndex = 0;
         if (images.length > 1) {
@@ -168,25 +155,26 @@
             images[currentIndex].classList.add('active');
           }, 3000);
         }
-      })
-      .catch(err => console.log(err));
+      });
 
-    // Musik: harus dipicu klik user
     const btn = document.getElementById('playMusicBtn');
     const audio = document.getElementById('bgMusic');
     const status = document.getElementById('musicStatus');
 
     btn.addEventListener('click', async () => {
       try {
-        audio.volume = 1.0;
-        await audio.play();
-        status.textContent = "Musik sedang diputar 🎶";
+        audio.pause();
+        audio.currentTime = 0;
+        audio.load();
+        audio.muted = false;
+        audio.volume = 1;
+        const result = audio.play();
+        if (result !== undefined) await result;
+        status.textContent = "Musik berhasil diputar 🎶";
         btn.textContent = "Musik Sedang Diputar";
-        btn.disabled = true;
-        btn.style.opacity = 0.7;
       } catch (err) {
-        status.textContent = "Musik gagal diputar. Coba klik lagi atau cek file MP3-nya.";
-        console.log(err);
+        console.error(err);
+        status.textContent = "Gagal memutar. Cek nama file MP3 dan pastikan file ikut terupload.";
       }
     });
   </script>
